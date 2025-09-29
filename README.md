@@ -34,8 +34,14 @@ https://github.com/user-attachments/assets/9d780c8f-c15f-42c1-a98f-ea2083e85b47
 
 *Complete walkthrough showing the interactive elements, playful button behavior, and magical celebration effects*
 
+
 ### 🌐 Live Website
-**Try it yourself:** [https://surajsinghyadav.github.io/forever/](https://surajsinghyadav.github.io/forever/)
+<a href="https://surajsinghyadav.github.io/forever/" target="_blank"><strong>Try it yourself: https://surajsinghyadav.github.io/forever/</strong></a>
+
+
+<a href="https://surajsinghyadav.github.io/forever/" target="_blank">
+  <img src="https://img.shields.io/badge/🌐-Try%20Live%20Demo-brightgreen?style=for-the-badge" alt="Try Live Demo">
+</a>
 
 ### 📱 What You'll Experience
 - Beautiful glassmorphism card design with animated gradient background
