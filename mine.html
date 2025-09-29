@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be Mine Forever?</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #fab1a0);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            cursor: default;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            25% {
+                background-position: 100% 50%;
+            }
+            50% {
+                background-position: 50% 100%;
+            }
+            75% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Floating elements background */
+        .bg-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 2rem;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 32px;
+            padding: 4rem 3rem;
+            width: 90%;
+            max-width: 650px;
+            min-height: 500px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                0 20px 60px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.15),
+                0 25px 80px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 32px;
+            padding: 2px;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.4), 
+                rgba(255, 255, 255, 0.1), 
+                rgba(255, 255, 255, 0.3)
+            );
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: xor;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .question-screen {
+            text-align: center;
+        }
+
+        .emojis {
+            font-size: 4rem;
+            margin-bottom: 2.5rem;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        h1 {
+            background: linear-gradient(135deg, #fff, #f8f9ff, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 3.5rem;
+            padding: 0 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            font-weight: 300;
+            margin-bottom: 2rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .buttons-wrapper {
+            position: relative;
+            min-height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 2.5rem;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        button {
+            padding: 1.25rem 3rem;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            font-weight: 600;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.02em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #4ade80, #22c55e, #16a34a);
+            color: #fff;
+            box-shadow: 
+                0 4px 15px rgba(74, 222, 128, 0.4),
+                0 8px 30px rgba(34, 197, 94, 0.2);
+            z-index: 5;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .yes-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 
+                0 8px 25px rgba(74, 222, 128, 0.5),
+                0 12px 40px rgba(34, 197, 94, 0.3);
+        }
+
+        .no-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626, #b91c1c);
+            color: #fff;
+            box-shadow: 
+                0 4px 15px rgba(239, 68, 68, 0.4),
+                0 8px 30px rgba(220, 38, 38, 0.2);
+            position: absolute;
+            z-index: 4;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .no-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 
+                0 8px 25px rgba(239, 68, 68, 0.5),
+                0 12px 40px rgba(220, 38, 38, 0.3);
+        }
+
+        .success-screen {
+            display: none;
+            text-align: center;
+            position: relative;
+            animation: celebrationFade 1s ease-in;
+        }
+
+        .success-screen.active {
+            display: block;
+        }
+
+        @keyframes celebrationFade {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) rotateY(180deg);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.1) rotateY(90deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotateY(0deg);
+            }
+        }
+
+        .success-screen h1 {
+            font-size: clamp(2rem, 7vw, 3rem);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffd700, #ff69b4, #ff1493);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .success-screen p {
+            background: linear-gradient(135deg, #fff, #f8f9ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: clamp(1.3rem, 4vw, 1.7rem);
+            font-weight: 300;
+            margin-top: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .flower {
+            position: fixed;
+            font-size: 2.5rem;
+            pointer-events: none;
+            z-index: 9999;
+            animation: enchantedFall linear forwards;
+            opacity: 0.9;
+            top: -50px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        @keyframes enchantedFall {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(20vh) rotate(72deg) scale(1);
+            }
+            80% {
+                opacity: 1;
+                transform: translateY(80vh) rotate(288deg) scale(1);
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px)) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced Share Button */
+        .share-button {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            padding: 0;
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, 0.1),
+                0 8px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .share-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 
+                0 8px 30px rgba(255, 255, 255, 0.2),
+                0 12px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .share-button svg {
+            width: 28px;
+            height: 28px;
+            fill: #fff;
+            opacity: 0.9;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+        }
+
+        /* Enhanced Bottom Text */
+        .bottom-text {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 16px;
+            font-weight: 500;
+            opacity: 0.5;
+            z-index: 1000;
+            pointer-events: none;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .card {
+                padding: 3rem 2rem;
+                min-height: 450px;
+                border-radius: 24px;
+            }
+
+            .emojis {
+                font-size: 3rem;
+                margin-bottom: 2rem;
+            }
+
+            .buttons {
+                gap: 2rem;
+            }
+
+            button {
+                padding: 1rem 2.5rem;
+                border-radius: 16px;
+            }
+
+            .flower {
+                font-size: 2rem;
+            }
+
+            .share-button {
+                top: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                border-radius: 16px;
+            }
+
+            .share-button svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            .bottom-text {
+                bottom: 20px;
+                right: 20px;
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+
+            .floating-heart {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .buttons {
+                gap: 1.5rem;
+            }
+
+            button {
+                padding: 0.875rem 2rem;
+            }
+        }
+
+        /* Notification Enhancement */
+        .notification {
+            position: fixed;
+            top: 90px;
+            right: 24px;
+            background: rgba(74, 222, 128, 0.95);
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1001;
+            box-shadow: 
+                0 4px 20px rgba(74, 222, 128, 0.3),
+                0 8px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideInNotification 0.3s ease-out;
+        }
+
+        @keyframes slideInNotification {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Background Elements -->
+    <div class="bg-elements" id="bgElements"></div>
+
+    <!-- Share Button -->
+    <button class="share-button" id="shareBtn" title="Share this love">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+            <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5m-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"/>
+        </svg>
+    </button>
+
+    <!-- Bottom Right Text -->
+    <div class="bottom-text">❤️iya</div>
+
+    <div class="container">
+        <div class="card">
+            <div class="question-screen" id="questionScreen">
+                <div class="emojis">💖✨💫</div>
+                <h1>Will you be mine forever?</h1>
+                <p class="subtitle">A question from the heart, waiting for your answer</p>
+                <div class="buttons-wrapper">
+                    <div class="buttons" id="buttonsContainer">
+                        <button class="yes-btn" id="yesBtn">Yes, Always! ✓</button>
+                        <button class="no-btn" id="noBtn">Maybe... ✗</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-screen" id="successScreen">
+                <div class="emojis">🌸💑✨</div>
+                <h1>Forever & Always! 💕</h1>
+                <p>Our love story begins now... 🌟</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const questionScreen = document.getElementById('questionScreen');
+        const successScreen = document.getElementById('successScreen');
+        const buttonsContainer = document.getElementById('buttonsContainer');
+        const buttonsWrapper = document.querySelector('.buttons-wrapper');
+        const shareBtn = document.getElementById('shareBtn');
+        const bgElements = document.getElementById('bgElements');
+        
+        let positionIndex = 0;
+        let isInitialPosition = true;
+
+        // Create floating background hearts
+        function createFloatingHearts() {
+            const hearts = ['💖', '💕', '💗', '💝', '💘', '💓'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                
+                bgElements.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 20000);
+            }, 3000);
+        }
+
+        createFloatingHearts();
+
+        // Enhanced share button functionality
+        shareBtn.addEventListener('click', async () => {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: '💕 Will You Be Mine Forever? 💕',
+                        text: 'Someone special wants to ask you something... ❤️',
+                        url: window.location.href
+                    });
+                } catch (error) {
+                    if (error.name !== 'AbortError') {
+                        console.log('Error sharing:', error);
+                        fallbackShare();
+                    }
+                }
+            } else {
+                fallbackShare();
+            }
+        });
+
+        function fallbackShare() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.textContent = '💕 Link copied with love!';
+                document.body.appendChild(notification);
+                setTimeout(() => notification.remove(), 3000);
+            }).catch(() => {
+                console.log('Could not copy to clipboard');
+            });
+        }
+
+        // Enhanced button movement logic
+        function setInitialPosition() {
+            noBtn.style.position = 'relative';
+            noBtn.style.left = 'auto';
+            noBtn.style.right = 'auto';
+            noBtn.style.top = 'auto';
+            noBtn.style.bottom = 'auto';
+            noBtn.style.transform = 'none';
+        }
+
+        setInitialPosition();
+
+        // More playful movement patterns
+        const moveEvents = ['mouseenter', 'mousedown', 'touchstart'];
+        moveEvents.forEach(event => {
+            noBtn.addEventListener(event, (e) => {
+                e.preventDefault();
+                if (isInitialPosition) {
+                    isInitialPosition = false;
+                }
+                moveNoButton();
+            });
+        });
+
+        // Advanced proximity detection
+        let lastMoveTime = 0;
+        document.addEventListener('mousemove', (e) => {
+            const now = Date.now();
+            if (now - lastMoveTime < 100) return;
+            
+            const noBtnRect = noBtn.getBoundingClientRect();
+            const distance = Math.sqrt(
+                Math.pow(e.clientX - (noBtnRect.left + noBtnRect.width / 2), 2) +
+                Math.pow(e.clientY - (noBtnRect.top + noBtnRect.height / 2), 2)
+            );
+            
+            if (distance < 100 && !isInitialPosition) {
+                lastMoveTime = now;
+                moveNoButton();
+            }
+        });
+
+        function moveNoButton() {
+            noBtn.style.position = 'absolute';
+            
+            const wrapperRect = buttonsWrapper.getBoundingClientRect();
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+            
+            // Enhanced movement patterns
+            if (positionIndex > 0 && positionIndex % 4 === 0) {
+                // Hide behind yes button occasionally
+                const yesRect = yesBtn.getBoundingClientRect();
+                const yesLeft = yesRect.left - wrapperRect.left;
+                const yesTop = yesRect.top - wrapperRect.top;
+                
+                noBtn.style.left = yesLeft + 'px';
+                noBtn.style.top = yesTop + 'px';
+                noBtn.style.transform = 'translateY(90%) scale(0.8)';
+                noBtn.style.zIndex = '1';
+            } else {
+                // More dynamic positioning
+                const maxX = wrapperRect.width - btnWidth;
+                const maxY = wrapperRect.height - btnHeight;
+                
+                let randomX, randomY;
+                
+                // Avoid center area where yes button is
+                do {
+                    randomX = Math.random() * Math.max(0, maxX);
+                    randomY = Math.random() * Math.max(0, maxY);
+                } while (
+                    randomX > maxX * 0.3 && randomX < maxX * 0.7 &&
+                    randomY > maxY * 0.3 && randomY < maxY * 0.7
+                );
+                
+                noBtn.style.left = randomX + 'px';
+                noBtn.style.top = randomY + 'px';
+                noBtn.style.transform = `rotate(${Math.random() * 20 - 10}deg) scale(${0.9 + Math.random() * 0.2})`;
+                noBtn.style.zIndex = '4';
+            }
+            
+            positionIndex++;
+        }
+
+        // Enhanced success celebration
+        yesBtn.addEventListener('click', () => {
+            questionScreen.classList.add('hidden');
+            successScreen.classList.add('active');
+            
+            // Create magical flower shower
+            createMagicalFlowers();
+            
+            // Add celebration effects
+            setTimeout(() => {
+                document.body.style.animation = 'celebration 0.5s ease-in-out';
+            }, 500);
+        });
+
+        function createMagicalFlowers() {
+            const flowers = ['🌸', '🌺', '🌼', '🌻', '🌹', '💐', '🌷', '🏵️', '💮', '🌈', '✨', '💫', '⭐'];
+            
+            // Initial burst
+            for (let i = 0; i < 25; i++) {
+                setTimeout(() => {
+                    createSingleFlower(flowers);
+                }, i * 80);
+            }
+            
+            // Continuous shower
+            const flowerInterval = setInterval(() => {
+                createSingleFlower(flowers);
+                
+                // Sometimes create clusters
+                if (Math.random() < 0.3) {
+                    setTimeout(() => createSingleFlower(flowers), 100);
+                    setTimeout(() => createSingleFlower(flowers), 200);
+                }
+            }, 150);
+            
+            window.flowerInterval = flowerInterval;
+        }
+        
+        function createSingleFlower(flowers) {
+            const flower = document.createElement('div');
+            flower.className = 'flower';
+            flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+            
+            flower.style.left = Math.random() * 100 + 'vw';
+            flower.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            flower.style.animationDelay = Math.random() * 0.5 + 's';
+            
+            document.body.appendChild(flower);
+            
+            setTimeout(() => {
+                flower.remove();
+            }, 8000);
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (isInitialPosition) {
+                setInitialPosition();
+            }
+        });
+    </script>
+</body>
+</html>
