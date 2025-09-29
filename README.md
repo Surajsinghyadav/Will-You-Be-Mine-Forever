@@ -36,7 +36,7 @@ https://github.com/user-attachments/assets/9d780c8f-c15f-42c1-a98f-ea2083e85b47
 
 
 ### 🌐 Live Website
-<a href="https://surajsinghyadav.github.io/forever/" target="_blank"><strong>Try it yourself: https://surajsinghyadav.github.io/forever/</strong></a>
+<a href="https://surajsinghyadav.github.io/Will-You-Be-Mine-Forever/" target="_blank"><strong>Try it yourself: https://surajsinghyadav.github.io/Will-You-Be-Mine-Forever/</strong></a>
 
 
 <a href="https://surajsinghyadav.github.io/forever/" target="_blank">
