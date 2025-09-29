@@ -39,7 +39,7 @@ https://github.com/user-attachments/assets/9d780c8f-c15f-42c1-a98f-ea2083e85b47
 <a href="https://surajsinghyadav.github.io/Will-You-Be-Mine-Forever/" target="_blank"><strong>Try it yourself: https://surajsinghyadav.github.io/Will-You-Be-Mine-Forever/</strong></a>
 
 
-<a href="https://surajsinghyadav.github.io/forever/" target="_blank">
+<a href="https://surajsinghyadav.github.io/Will-You-Be-Mine-Forever/" target="_blank">
   <img src="https://img.shields.io/badge/🌐-Try%20Live%20Demo-brightgreen?style=for-the-badge" alt="Try Live Demo">
 </a>
 
