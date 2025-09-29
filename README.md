@@ -23,17 +23,13 @@
 - **💌 Web Share API Integration** - Easy sharing with native device functionality
 - **🎪 Progressive Enhancement** - Graceful fallbacks for older browsers
 
-## 🖼️ Screenshots
 
-<img src="https://github.com/Surajsinghyadav/forever/blob/main/Screenshot%202025-09-29%20155021.png?raw=true">
-*The beautiful main interface with glassmorphism card design*
+<!-- <img src="https://github.com/Surajsinghyadav/forever/blob/main/Screenshot%202025-09-29%20155021.png?raw=true">
+*The beautiful main interface with glassmorphism card design* -->
 
 ### 📺 Video Demonstration
 
 https://github.com/user-attachments/assets/9d780c8f-c15f-42c1-a98f-ea2083e85b47
-
-
-## 🎬 Demo Video
 
 
 *Complete walkthrough showing the interactive elements, playful button behavior, and magical celebration effects*
